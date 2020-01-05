@@ -63,4 +63,24 @@ public class RouteServiceImpl implements RouteService {
 
         return route;
     }
+
+    @Override
+    public PageBean<Route> pageQueryFavorite(int uid, int currentPage, int pageSize) {
+        //封装PageBean
+        PageBean<Route> pageBean = new PageBean<Route>();
+        //设置当前页码
+        pageBean.setCurrentPage(currentPage);
+        //设置每页显示条数
+        pageBean.setPageSize(pageSize);
+        //设置总记录数
+        int totalCount = favoriteDao.findCountByUid(uid);
+        pageBean.setTotalCount(totalCount);
+        //设置当前页显示的数据
+        List<Route> page = routeDao.findByFavorite(uid, pageSize * (currentPage - 1), pageSize);
+        pageBean.setList(page);
+        //设置总页数
+        int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+        pageBean.setTotalPage(totalPage);
+        return pageBean;
+    }
 }

@@ -15,4 +15,6 @@ public interface FavoriteDao {
     int findCountByRid(int rid);
 
     void add(int rid, int uid);
+
+    int findCountByUid(int uid);
 }

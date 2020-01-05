@@ -30,4 +30,6 @@ public interface RouteDao {
      * @return
      */
     Route findOne(int rid);
+
+    List<Route> findByFavorite(int uid,int start,int pageSize);
 }

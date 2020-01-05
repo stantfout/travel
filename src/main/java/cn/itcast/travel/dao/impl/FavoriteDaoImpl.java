@@ -35,4 +35,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
         String sql = "insert into tab_favorite values (?,?,?)";
         template.update(sql,rid,new Date(),uid);
     }
+
+    @Override
+    public int findCountByUid(int uid) {
+        String sql = "select count(*) from tab_favorite where  uid = ?";
+        return template.queryForObject(sql,Integer.class,uid);
+    }
 }

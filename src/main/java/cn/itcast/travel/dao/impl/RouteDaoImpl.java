@@ -62,4 +62,12 @@ public class RouteDaoImpl implements RouteDao {
         Route route = template.queryForObject(sql, new BeanPropertyRowMapper<>(Route.class),rid);
         return route;
     }
+
+    @Override
+    public List<Route> findByFavorite(int uid, int start, int pageSize) {
+
+        String sql = "SELECT * from tab_route WHERE rid in (SELECT rid FROM tab_favorite WHERE uid = ?) limit ?,?";
+        template.query(sql, new BeanPropertyRowMapper<>(Route.class),uid,start,pageSize);
+        return null;
+    }
 }

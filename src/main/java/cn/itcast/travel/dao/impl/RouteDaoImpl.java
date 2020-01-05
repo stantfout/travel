@@ -70,4 +70,17 @@ public class RouteDaoImpl implements RouteDao {
         List<Route> query = template.query(sql, new BeanPropertyRowMapper<>(Route.class), uid, start, pageSize);
         return query;
     }
+
+    @Override
+    public void addFavorite(int rid) {
+        String sql = "update tab_route set count = count + 1 where rid = ?";
+        template.update(sql,rid);
+    }
+
+    @Override
+    public List<Route> findHot() {
+        String sql = "SELECT * FROM tab_route ORDER BY count DESC LIMIT 0,5";
+        List<Route> query = template.query(sql, new BeanPropertyRowMapper<>(Route.class));
+        return query;
+    }
 }

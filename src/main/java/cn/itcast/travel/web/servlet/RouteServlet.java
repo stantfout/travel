@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/route/*")
 public class RouteServlet extends BaseServlet {
@@ -85,6 +86,12 @@ public class RouteServlet extends BaseServlet {
         RouteService routeService = new RouteServiceImpl();
         PageBean<Route> routePageBean = routeService.pageQueryFavorite(uid, currentPage, pageSize);
         writeValue(routePageBean, response);
+    }
+
+    public void pageQueryHot(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RouteService routeService = new RouteServiceImpl();
+        List<Route> routeList = routeService.pageQueryHot();
+        writeValue(routeList, response);
     }
 
     /**

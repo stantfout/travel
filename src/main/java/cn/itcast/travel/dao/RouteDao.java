@@ -32,4 +32,8 @@ public interface RouteDao {
     Route findOne(int rid);
 
     List<Route> findByFavorite(int uid,int start,int pageSize);
+
+    void addFavorite(int rid);
+
+    List<Route> findHot();
 }

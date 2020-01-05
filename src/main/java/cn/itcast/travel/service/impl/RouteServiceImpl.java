@@ -57,10 +57,6 @@ public class RouteServiceImpl implements RouteService {
         Seller seller = sellerDao.findById(route.getSid());
         route.setSeller(seller);
 
-        //4.查询收藏次数
-        int count = favoriteDao.findCountByRid(route.getRid());
-        route.setCount(count);
-
         return route;
     }
 
@@ -82,5 +78,10 @@ public class RouteServiceImpl implements RouteService {
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
         pageBean.setTotalPage(totalPage);
         return pageBean;
+    }
+
+    @Override
+    public List<Route> pageQueryHot() {
+        return routeDao.findHot();
     }
 }

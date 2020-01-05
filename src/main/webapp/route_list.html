@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>黑马旅游-搜索</title>
+    <title>黑科旅游-搜索</title>
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" href="css/search.css">
     <script src="js/jquery-3.3.1.js"></script>
@@ -66,7 +66,7 @@
                 for (var i = 0; i < data.list.length; i++) {
                     var route = data.list[i];
                     var li = '<li>\n' +
-                        '                        <div class="img"><img src="'+ route.rimage+'" style="width: 299px"></div>\n' +
+                        '                        <div class="img"><img src="'+ route.rimage +'" style="width: 299px"></div>\n' +
                         '                        <div class="text1">\n' +
                         '                            <p>'+route.rname+'</p>\n' +
                         '                            <br/>\n' +
@@ -87,6 +87,23 @@
 
                 window.scrollTo(0,0);
             })
+            $.get("route/pageQueryHot",{},function(data) {
+                var route_lis = "";
+                for (var i = 0; i < data.length; i++) {
+                    var route = data[i];
+                    var li = '<li>\n' +
+                        '                        <div class="left"><img src="'+route.rimage+'" alt=""></div>\n' +
+                        '                        <div class="right">\n' +
+                        '                            <p>'+route.rname+'</p>\n' +
+                        '                            <p>网付价<span>&yen;<span>'+route.price+'</span>起</span>\n' +
+                        '                            </p>\n' +
+                        '                        </div>\n' +
+                        '                    </li>';
+                    route_lis += li;
+                }
+                $("#hot").html(route_lis);
+            })
+
         }
     </script>
 </head>
@@ -97,7 +114,7 @@
     <div class="contant">
         <div class="crumbs">
             <img src="images/search.png" alt="">
-            <p>黑马旅行><span>搜索结果</span></p>
+            <p>黑科旅行><span>搜索结果</span></p>
         </div>
         <div class="xinxi clearfix">
             <div class="left">
@@ -123,47 +140,8 @@
                     <div class="hot">HOT</div>
                     <span>热门推荐</span>
                 </div>
-                <ul>
-                    <li>
-                        <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                        <div class="right">
-                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                            <p>网付价<span>&yen;<span>899</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                        <div class="right">
-                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                            <p>网付价<span>&yen;<span>899</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                        <div class="right">
-                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                            <p>网付价<span>&yen;<span>899</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                        <div class="right">
-                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                            <p>网付价<span>&yen;<span>899</span>起</span>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left"><img src="images/04-search_09.jpg" alt=""></div>
-                        <div class="right">
-                            <p>清远新银盏温泉度假村酒店/自由行套...</p>
-                            <p>网付价<span>&yen;<span>899</span>起</span>
-                            </p>
-                        </div>
-                    </li>
+                <ul id = "hot">
+
                 </ul>
             </div>
         </div>

@@ -1,12 +1,15 @@
 package cn.itcast.travel.service.impl;
 
 import cn.itcast.travel.dao.FavoriteDao;
+import cn.itcast.travel.dao.RouteDao;
 import cn.itcast.travel.dao.impl.FavoriteDaoImpl;
+import cn.itcast.travel.dao.impl.RouteDaoImpl;
 import cn.itcast.travel.domain.Favorite;
 import cn.itcast.travel.service.FavoriteService;
 
 public class FavoriteServiceImpl implements FavoriteService {
     private FavoriteDao favoriteDao = new FavoriteDaoImpl();
+    private RouteDao routeDao = new RouteDaoImpl();
     @Override
     public boolean isFavorite(String rid, int uid) {
         Favorite favorite = favoriteDao.findByRidAndUid(Integer.parseInt(rid), uid);
@@ -16,5 +19,6 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public void add(String rid, int uid) {
         favoriteDao.add(Integer.parseInt(rid),uid);
+        routeDao.addFavorite(Integer.parseInt(rid));
     }
 }

@@ -25,12 +25,6 @@ public class FavoriteDaoImpl implements FavoriteDao {
     }
 
     @Override
-    public int findCountByRid(int rid) {
-        String sql = "select count(*) from tab_favorite where rid = ?";
-        return template.queryForObject(sql,Integer.class,rid);
-    }
-
-    @Override
     public void add(int rid, int uid) {
         String sql = "insert into tab_favorite values (?,?,?)";
         template.update(sql,rid,new Date(),uid);

@@ -61,6 +61,32 @@ public class RouteServlet extends BaseServlet {
         writeValue(routePageBean, response);
     }
 
+    public void pageQueryFavorite(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1.接受参数
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String uidStr = request.getParameter("uid");
+        //2.处理参数
+        int uid = 0;
+        if (uidStr != null && uidStr.length() > 0 && !uidStr.equals("null")) {
+            uid = Integer.parseInt(uidStr);
+        }
+
+        int currentPage = 1;
+        if (currentPageStr != null && currentPageStr.length() > 0) {
+            currentPage = Integer.parseInt(currentPageStr);
+        }
+
+        int pageSize = 12;
+        if (pageSizeStr != null && pageSizeStr.length() > 0) {
+            pageSize = Integer.parseInt(pageSizeStr);
+        }
+        //3。调用service查询pageBean对象
+        RouteService routeService = new RouteServiceImpl();
+        PageBean<Route> routePageBean = routeService.pageQueryFavorite(uid, currentPage, pageSize);
+        writeValue(routePageBean, response);
+    }
+
     /**
      * 根据ID查询一个旅游线路的信息
      * @param request

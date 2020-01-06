@@ -87,7 +87,7 @@
 
                 window.scrollTo(0,0);
             })
-            $.get("route/pageQueryHot",{},function(data) {
+            $.get("route/pageQueryHot",{cid:cid,sum:5},function(data) {
                 var route_lis = "";
                 for (var i = 0; i < data.length; i++) {
                     var route = data[i];

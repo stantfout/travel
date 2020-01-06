@@ -10,9 +10,11 @@ public interface RouteDao {
      * 根据cid查询总记录数
      * @param cid
      * @param rnameStr
+     * @param price1
+     * @param price2
      * @return
      */
-    int findTotalCount(int cid, String rnameStr);
+    int findTotalCount(int cid, String rnameStr, int price1, int price2);
 
     /**
      * 查询单页记录
@@ -20,9 +22,11 @@ public interface RouteDao {
      * @param start
      * @param pageSize
      * @param rnameStr
+     * @param price1
+     * @param price2
      * @return
      */
-    List<Route> findByPage(int cid, int start, int pageSize, String rnameStr);
+    List<Route> findByPage(int cid, int start, int pageSize, String rnameStr, int price1, int price2);
 
     /**
      * 根据id查询
@@ -35,5 +39,5 @@ public interface RouteDao {
 
     void addFavorite(int rid);
 
-    List<Route> findHot();
+    List<Route> findHot(int sum,int cid);
 }

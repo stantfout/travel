@@ -37,6 +37,8 @@ public class RouteServlet extends BaseServlet {
         String cidStr = request.getParameter("cid");
         String rnameStr = request.getParameter("rname");
         rnameStr = new String(rnameStr.getBytes("iso-8859-1"), "utf-8");
+        String rprice1 = request.getParameter("price1");
+        String rprice2 = request.getParameter("price2");
         //2.处理参数
         int cid = 0;
         if (cidStr != null && cidStr.length() > 0 && !cidStr.equals("null")) {
@@ -56,9 +58,19 @@ public class RouteServlet extends BaseServlet {
         if (rnameStr.equals("null")) {
             rnameStr = null;
         }
+
+        int price1 = -1;
+        if(rprice1 != null && rprice1.length() > 0 && !rprice1.equals("null")) {
+            price1 = Integer.parseInt(rprice1);
+        }
+
+        int price2 = -1;
+        if(rprice2 != null && rprice2.length() > 0 && !rprice2.equals("null")) {
+            price2 = Integer.parseInt(rprice2);
+        }
         //3。调用service查询pageBean对象
         RouteService routeService = new RouteServiceImpl();
-        PageBean<Route> routePageBean = routeService.pageQuery(cid, currentPage, pageSize, rnameStr);
+        PageBean<Route> routePageBean = routeService.pageQuery(cid, currentPage, pageSize, rnameStr,price1,price2);
         writeValue(routePageBean, response);
     }
 
@@ -89,8 +101,18 @@ public class RouteServlet extends BaseServlet {
     }
 
     public void pageQueryHot(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cidStr = request.getParameter("cid");
+        String sumStr = request.getParameter("sum");
+        int cid = 0;
+        if (cidStr != null && cidStr.length() > 0 && !cidStr.equals("null")) {
+            cid = Integer.parseInt(cidStr);
+        }
+        int sum = 5;
+        if (sumStr != null && sumStr.length() > 0 && !sumStr.equals("null")) {
+            sum = Integer.parseInt(sumStr);
+        }
         RouteService routeService = new RouteServiceImpl();
-        List<Route> routeList = routeService.pageQueryHot();
+        List<Route> routeList = routeService.pageQueryHot(sum,cid);
         writeValue(routeList, response);
     }
 

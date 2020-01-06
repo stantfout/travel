@@ -25,8 +25,6 @@
             })
             function load(uid,currentPage) {
                 $.get("route/pageQueryFavorite", {uid: uid,currentPage:currentPage}, function (data) {
-                    $("#totalPage").html(data.totalPage)
-                    $("#totalCount").html(data.totalCount)
                     //分页工具条
                     var lis = "";
                     var firstPage='<li><a href="javascript:load('+uid+','+1+')">首页</a></li>';

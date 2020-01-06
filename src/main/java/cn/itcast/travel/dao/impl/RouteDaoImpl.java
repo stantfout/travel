@@ -13,44 +13,62 @@ public class RouteDaoImpl implements RouteDao {
     private JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
 
     @Override
-    public int findTotalCount(int cid, String rnameStr) {
+    public int findTotalCount(int cid, String rnameStr, int price1, int price2) {
         String sql = "select count(*) from tab_route where 1=1";
         List params = new ArrayList();
-        if(cid != 0){
+        if(cid != 0 && cid != -1){
             sql += " and cid=? ";
             params.add(cid);
+        } else if (cid == -1){
+            sql += " and count > 0 ";
         }
         if(rnameStr != null && rnameStr.length() > 0) {
             sql += " and rname like ?";
             params.add("%"+rnameStr+"%");
         }
-//        System.out.println(sql);
-//        for (Object param : params) {
-//            System.out.println(param);
-//        }
+        if(price1 != -1) {
+            sql += " and price >= ? ";
+            params.add(price1);
+
+        }
+        if(price2 != -1) {
+            sql += " and price <= ? ";
+            params.add(price2);
+        }
         return template.queryForObject(sql, Integer.class, params.toArray());
     }
 
     @Override
-    public List<Route> findByPage(int cid, int start, int pageSize, String rnameStr) {
+    public List<Route> findByPage(int cid, int start, int pageSize, String rnameStr, int price1, int price2) {
         //String sql = "select * from tab_route where cid = ? limit ? , ?";
         String sql = "select * from tab_route where 1=1 ";
         List params = new ArrayList();
-        if(cid != 0){
+        if(cid != 0 && cid != -1){
             sql += " and cid=? ";
             params.add(cid);
+        } else if (cid == -1){
+            sql += " and count > 0 ";
         }
         if(rnameStr != null && rnameStr.length() > 0) {
             sql += " and rname like ? ";
             params.add("%"+rnameStr+"%");
         }
+        if(price1 != -1) {
+            sql += " and price >= ? ";
+            params.add(price1);
+
+        }
+        if(price2 != -1) {
+            sql += " and price <= ? ";
+            params.add(price2);
+        }
+        if(cid == -1) {
+            sql += " order by count desc ";
+        }
         sql += " limit ? , ?";
         params.add(start);
         params.add(pageSize);
-//        System.out.println(sql);
-//        for (Object param : params) {
-//            System.out.println(param);
-//        }
+        System.out.println(sql);
         List<Route> routeList = template.query(sql, new BeanPropertyRowMapper<>(Route.class), params.toArray());
         return routeList;
 
@@ -78,9 +96,16 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public List<Route> findHot() {
-        String sql = "SELECT * FROM tab_route ORDER BY count DESC LIMIT 0,5";
-        List<Route> query = template.query(sql, new BeanPropertyRowMapper<>(Route.class));
+    public List<Route> findHot(int sum,int cid) {
+        String sql = "SELECT * FROM tab_route where 1 = 1 ";
+        List params = new ArrayList();
+        if(cid != 0) {
+            sql += " and cid = ? ";
+            params.add(cid);
+        }
+        sql += "ORDER BY count DESC LIMIT 0,?";
+        params.add(sum);
+        List<Route> query = template.query(sql, new BeanPropertyRowMapper<>(Route.class),params.toArray());
         return query;
     }
 }

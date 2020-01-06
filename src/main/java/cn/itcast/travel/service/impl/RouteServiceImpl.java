@@ -24,7 +24,7 @@ public class RouteServiceImpl implements RouteService {
     private FavoriteDao favoriteDao = new FavoriteDaoImpl();
 
     @Override
-    public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize, String rnameStr) {
+    public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize, String rnameStr,int price1, int price2) {
         //封装PageBean
         PageBean<Route> pageBean = new PageBean<Route>();
         //设置当前页码
@@ -32,10 +32,10 @@ public class RouteServiceImpl implements RouteService {
         //设置每页显示条数
         pageBean.setPageSize(pageSize);
         //设置总记录数
-        int totalCount = routeDao.findTotalCount(cid,rnameStr);
+        int totalCount = routeDao.findTotalCount(cid,rnameStr,price1,price2);
         pageBean.setTotalCount(totalCount);
         //设置当前页显示的数据
-        List<Route> page = routeDao.findByPage(cid, pageSize * (currentPage - 1), pageSize, rnameStr);
+        List<Route> page = routeDao.findByPage(cid, pageSize * (currentPage - 1), pageSize, rnameStr,price1,price2);
         pageBean.setList(page);
         //设置总页数
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
@@ -81,7 +81,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<Route> pageQueryHot() {
-        return routeDao.findHot();
+    public List<Route> pageQueryHot(int sum,int cid) {
+        return routeDao.findHot(sum,cid);
     }
 }

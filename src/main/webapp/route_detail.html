@@ -199,7 +199,7 @@
 
     //点击收藏按钮触发的方法
     function addFavorite() {
-        var  rid = getParameter("rid");
+        var rid = getParameter("rid");
         //1.判断用户是否登录
         $.get("user/findOne",{},function (user) {
             if(user) {

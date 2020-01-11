@@ -68,7 +68,6 @@ public class RouteDaoImpl implements RouteDao {
         sql += " limit ? , ?";
         params.add(start);
         params.add(pageSize);
-        System.out.println(sql);
         List<Route> routeList = template.query(sql, new BeanPropertyRowMapper<>(Route.class), params.toArray());
         return routeList;
 
